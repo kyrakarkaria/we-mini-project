@@ -132,7 +132,7 @@ export default function Home({
         <div className="music-card">
           <div className="music-container">
             <iframe
-              src="https://widgets.commoninja.com/iframe/a6ea9287-cf32-4cbf-8ffc-a2195c2adcea"
+              src="https://widgets.commoninja.com/iframe/3586f4ce-cf4a-4332-aafd-dc3cb9614903"
               scrolling="no"
               title="Music Player"
               className="music-iframe"

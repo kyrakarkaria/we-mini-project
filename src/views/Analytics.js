@@ -106,11 +106,7 @@ export default function Analytics({ tasks = [], authFetch }) {
           <h2 className="mb-0" style={{fontFamily: 'var(--font-serif)', color: 'var(--text-main)'}}>Your Productivity</h2>
           <p className="text-muted" style={{fontSize: '0.85rem'}}>Track your progress and build better habits.</p>
         </div>
-        <div>
-          <div className="btn btn-outline-secondary btn-sm rounded bg-white text-muted border-light px-3 py-2" style={{borderColor: 'var(--border) !important'}}>
-            <i className="bi bi-calendar3 me-2"></i> Apr 28 - May 4, 2025 <i className="bi bi-chevron-down ms-2"></i>
-          </div>
-        </div>
+    
       </div>
 
       {/* ── TOP STAT CARDS ── */}
@@ -182,52 +178,7 @@ export default function Analytics({ tasks = [], authFetch }) {
         </div>
       </div>
 
-      {/* ── BOTTOM ROW ── */}
-      <div className="analytics-bottom-row">
-        <div className="chart-card paper-card justify-content-center">
-          <h3 className="chart-title border-0 mb-2">Completion Rate</h3>
-          <div className="d-flex align-items-center gap-3">
-            <div className="completion-circle">
-              <span className="completion-value">{completionRate || 25}%</span>
-              <span className="completion-label">Completed</span>
-            </div>
-            <div className="text-muted" style={{fontSize: '0.8rem'}}>
-              1 of 4 tasks completed
-              <div className="progress mt-2" style={{height: '4px'}}>
-                <div className="progress-bar" style={{width: '25%', background: 'var(--accent-sage)'}}></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="chart-card paper-card">
-          <h3 className="chart-title border-0 mb-0">Weekly Trend</h3>
-          <div className="chart-container mt-2">
-            <Line data={trendData} options={lineOptions} />
-          </div>
-        </div>
-
-        <div className="chart-card paper-card">
-          <h3 className="chart-title border-0 mb-3">Focus Time</h3>
-          <div className="d-flex align-items-center gap-3 mb-3">
-            <div className="stat-icon-wrap" style={{width: '45px', height: '45px', background: '#f5e4e1'}}><i className="bi bi-clock text-dark"></i></div>
-            <div>
-              <div className="focus-time-value">2h 45m</div>
-              <div className="text-muted" style={{fontSize: '0.7rem'}}>Total focus time</div>
-            </div>
-          </div>
-          <div className="trend-up"><i className="bi bi-arrow-up"></i> 45m from last week</div>
-        </div>
-
-        <div className="analytics-sticky d-flex flex-column justify-content-center align-items-center text-center">
-          <div className="metallic-pin-small"></div>
-          <div style={{fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-main)', marginBottom: '0.5rem'}}>Top Focus Day</div>
-          <div className="text-muted mb-2" style={{fontSize: '0.75rem'}}>May 2, 2025</div>
-          <div className="text-sage fw-bold" style={{fontSize: '1rem'}}>60 mins</div>
-          <div className="heart-doodle" style={{bottom: '5px', right: '10px'}}><i className="bi bi-leaf"></i></div>
-        </div>
-      </div>
-
+    
     </div>
   );
 }

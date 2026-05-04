@@ -60,6 +60,7 @@ export default function Tasks({ tasks, setTasks, authFetch }) {
 
   return (
     <div className="d-flex flex-column h-100">
+
       {/* ── PAGE HEADER ── */}
       <div className="mb-4">
         <h2 className="mb-0" style={{ fontFamily: 'var(--font-serif)', color: 'var(--text-main)' }}>
@@ -70,57 +71,59 @@ export default function Tasks({ tasks, setTasks, authFetch }) {
         </p>
       </div>
 
-      <div className="tasks-dashboard d-flex justify-content-center w-100">
-        <div className="tasks-main-column w-100" style={{ maxWidth: '1000px' }}>
+      <div className="tasks-dashboard">
+        <div className="tasks-main-column">
 
-          {/* ── ADD TASK CARD ── */}
-          <div className="add-task-card paper-card">
+          {/* ── ADD TASK — washi tape is sibling to card ── */}
+          <div className="add-task-wrapper">
             <div className="washi-tape"></div>
-            <div className="fw-semibold ms-4 ps-2 mb-2">Add New Task</div>
-            <div className="add-task-input-wrapper">
-              <input
-                type="text"
-                className="add-task-input"
-                placeholder="What needs to be done?"
-                value={newTask.title}
-                onChange={e => setNewTask({ ...newTask, title: e.target.value })}
-                onKeyPress={e => e.key === 'Enter' && addTask()}
-              />
-              <div className="add-task-actions">
-                <div className="d-flex align-items-center gap-1 text-muted" style={{ fontSize: '0.85rem' }}>
-                  <i className="bi bi-calendar3"></i>
-                  <input
-                    type="date"
-                    className="border-0 bg-transparent text-muted outline-none"
-                    style={{ width: '110px' }}
-                    value={newTask.dueDate}
-                    onChange={e => setNewTask({ ...newTask, dueDate: e.target.value })}
-                  />
-                </div>
-                <div className="d-flex align-items-center gap-1 text-muted ms-2" style={{ fontSize: '0.85rem' }}>
-                  <i className="bi bi-flag"></i>
-                  <select
-                    className="border-0 bg-transparent outline-none fw-medium"
-                    style={{
-                      color: newTask.priority === 'high' ? '#e74c3c'
-                           : newTask.priority === 'medium' ? '#f5b041'
-                           : '#70846b'
-                    }}
-                    value={newTask.priority}
-                    onChange={e => setNewTask({ ...newTask, priority: e.target.value })}
+            <div className="add-task-card paper-card">
+              <div className="fw-semibold ms-4 ps-2 mb-2">Add New Task</div>
+              <div className="add-task-input-wrapper">
+                <input
+                  type="text"
+                  className="add-task-input"
+                  placeholder="What needs to be done?"
+                  value={newTask.title}
+                  onChange={e => setNewTask({ ...newTask, title: e.target.value })}
+                  onKeyPress={e => e.key === 'Enter' && addTask()}
+                />
+                <div className="add-task-actions">
+                  <div className="d-flex align-items-center gap-1 text-muted" style={{ fontSize: '0.85rem' }}>
+                    <i className="bi bi-calendar3"></i>
+                    <input
+                      type="date"
+                      className="border-0 bg-transparent text-muted"
+                      style={{ width: '110px' }}
+                      value={newTask.dueDate}
+                      onChange={e => setNewTask({ ...newTask, dueDate: e.target.value })}
+                    />
+                  </div>
+                  <div className="d-flex align-items-center gap-1 text-muted ms-2" style={{ fontSize: '0.85rem' }}>
+                    <i className="bi bi-flag"></i>
+                    <select
+                      className="border-0 bg-transparent fw-medium"
+                      style={{
+                        color: newTask.priority === 'high' ? '#e74c3c'
+                             : newTask.priority === 'medium' ? '#f5b041'
+                             : '#70846b'
+                      }}
+                      value={newTask.priority}
+                      onChange={e => setNewTask({ ...newTask, priority: e.target.value })}
+                    >
+                      <option value="high">High</option>
+                      <option value="medium">Medium</option>
+                      <option value="low">Low</option>
+                    </select>
+                  </div>
+                  <button
+                    className="btn btn-sm text-white ms-2"
+                    style={{ background: 'var(--accent-sage)', borderRadius: '6px', padding: '0.3rem 0.8rem' }}
+                    onClick={addTask}
                   >
-                    <option value="high">High</option>
-                    <option value="medium">Medium</option>
-                    <option value="low">Low</option>
-                  </select>
+                    + Add Task
+                  </button>
                 </div>
-                <button
-                  className="btn btn-sm text-white ms-2"
-                  style={{ background: 'var(--accent-sage)', borderRadius: '6px', padding: '0.3rem 0.8rem' }}
-                  onClick={addTask}
-                >
-                  + Add Task
-                </button>
               </div>
             </div>
           </div>
@@ -143,11 +146,14 @@ export default function Tasks({ tasks, setTasks, authFetch }) {
             </div>
           </div>
 
-          {/* ── NOTEBOOK WRAPPER + NOTEBOOK ── */}
+          {/* ── NOTEBOOK — binding is flex sibling to content ── */}
           <div className="notebook-wrapper">
-            <div className="tasks-notebook">
 
-              {/* Notebook header */}
+            {/* Binding: flex child, always full height of wrapper */}
+            <div className="spiral-binding"></div>
+
+            {/* Scrollable content */}
+            <div className="tasks-notebook">
               <div className="d-flex justify-content-between align-items-center mb-3">
                 <div className="fw-semibold" style={{ color: 'var(--accent-sage)' }}>
                   {tasks.length} Tasks
@@ -163,7 +169,6 @@ export default function Tasks({ tasks, setTasks, authFetch }) {
                 </div>
               </div>
 
-              {/* Task list */}
               <div className="notebook-list">
                 {sortedTasks.length === 0 ? (
                   <div className="text-center text-muted mt-4">No tasks found.</div>
@@ -182,15 +187,21 @@ export default function Tasks({ tasks, setTasks, authFetch }) {
                           {task.title}
                         </div>
                         <div className="d-flex gap-2 mt-1">
-                          {task.priority === 'high' && <span className="task-tag tag-high">High</span>}
+                          {task.priority === 'high' && (
+                            <span className="task-tag tag-high">High</span>
+                          )}
                           {task.priority === 'high' && !task.isDone && (
                             <span className="task-tag" style={{ background: '#fdf2f0', color: '#e74c3c' }}>
                               <i className="bi bi-exclamation-triangle"></i> Urgent
                             </span>
                           )}
-                          {task.priority === 'medium' && <span className="task-tag tag-medium">Medium</span>}
+                          {task.priority === 'medium' && (
+                            <span className="task-tag tag-medium">Medium</span>
+                          )}
                           {task.priority === 'low' && (
-                            <span className="task-tag" style={{ background: '#edf2eb', color: '#70846b' }}>Low</span>
+                            <span className="task-tag" style={{ background: '#edf2eb', color: '#70846b' }}>
+                              Low
+                            </span>
                           )}
                         </div>
                       </div>
@@ -212,14 +223,13 @@ export default function Tasks({ tasks, setTasks, authFetch }) {
                 )}
               </div>
 
-              {/* Footer */}
               <div className="text-center mt-4">
                 <span className="text-muted" style={{ fontSize: '0.85rem', cursor: 'pointer' }}>
                   View completed tasks ({completedCount}) <i className="bi bi-chevron-down"></i>
                 </span>
               </div>
-
             </div>
+
           </div>
           {/* end notebook-wrapper */}
 
