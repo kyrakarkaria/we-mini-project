@@ -1,0 +1,137 @@
+/* ── SIDEBAR CONTAINER ── */
+.sidebar {
+  background-color: transparent; 
+  min-height: 100vh;
+  width: 260px;
+  flex-shrink: 0;
+  border-right: none; /* Removed border to match mockup */
+  z-index: 10;
+}
+
+/* ── LOGO ── */
+.logo-text {
+  font-family: var(--font-cursive);
+  font-size: 2.2rem;
+  font-weight: 600 !important;
+  color: var(--accent-sage); /* The logo is green in the mockup */
+  letter-spacing: -0.5px;
+  padding-left: 0.5rem;
+}
+
+/* ── NAV LINKS ── */
+.custom-nav-link {
+  background: transparent;
+  border: none;
+  color: var(--text-main); 
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 400;
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px; /* Slightly squarer pill */
+  text-align: left;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+}
+
+.custom-nav-link i {
+  font-size: 1.1rem;
+  opacity: 0.7;
+}
+
+/* Hover State */
+.custom-nav-link:hover {
+  background: var(--bg-hover); 
+  color: var(--text-main);
+}
+
+/* Active State */
+.custom-nav-link.active {
+  background: var(--accent-beige); 
+  color: var(--text-main);
+  font-weight: 500;
+}
+
+.custom-nav-link.active i {
+  opacity: 1;
+  color: var(--text-main);
+}
+
+/* ── SIDEBAR STICKY NOTE ── */
+.sidebar-sticky-note {
+  background-color: var(--accent-yellow);
+  padding: 1.25rem 1rem;
+  border-radius: 2px 2px 12px 2px;
+  box-shadow: 2px 4px 10px rgba(0,0,0,0.05);
+  position: relative;
+  font-family: var(--font-cursive);
+  font-size: 1.1rem;
+  color: var(--text-main);
+  line-height: 1.4;
+  margin-left: 1rem;
+  margin-right: 2rem;
+  transform: rotate(-2deg);
+}
+
+.metallic-pin-small {
+  position: absolute; top: 6px; left: 50%; transform: translateX(-50%);
+  width: 8px; height: 8px;
+  background: radial-gradient(circle at 30% 30%, #e8d0a9, #a3824f);
+  border-radius: 50%;
+  box-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+.heart-doodle {
+  position: absolute;
+  bottom: 10px;
+  right: 15px;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* ── USER PROFILE PILL ── */
+.user-profile-pill {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0.8rem;
+  background: var(--bg-hover);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-bottom: 1rem;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+.user-profile-pill:hover {
+  background: var(--border);
+}
+
+.user-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #eadecd;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  margin-right: 0.8rem;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.user-status {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}

@@ -1,17 +1,49 @@
-
+/* Override Bootstrap's defaults with our Taskflow Light Theme */
 body {
-    background-color: #fff3e4 !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    font-family: Arial, Helvetica, sans-serif !important;
-    color: #333 !important;
-    -webkit-font-smoothing: antialiased;
+  background-color: var(--bg-base) !important;
+  color: var(--text-main) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  font-family: var(--font-sans) !important;
+  -webkit-font-smoothing: antialiased;
 }
 
 #root {
-    background-color: #fff3e4;
+  background-color: var(--bg-base) !important;
+  min-height: 100vh;
 }
 
+/* Bootstrap override — cards, modals etc */
+.card, .modal-content, .list-group-item {
+  background-color: var(--bg-surface) !important; 
+  border-color: var(--border) !important; 
+  color: var(--text-main) !important;
+  border-radius: 12px !important;
+}
+
+/* Bootstrap form controls */
+.form-control, .form-select {
+  background-color: var(--bg-surface) !important;
+  border-color: var(--border-strong) !important;
+  color: var(--text-main) !important;
+  border-radius: 8px !important;
+}
+
+.form-control:focus, .form-select:focus {
+  background-color: var(--bg-surface) !important;
+  border-color: var(--accent-sage) !important;
+  color: var(--text-main) !important;
+  box-shadow: 0 0 0 2px rgba(112, 132, 107, 0.15) !important;
+}
+
+.form-control::placeholder {
+  color: var(--text-faint) !important;
+}
+
+/* Bootstrap text overrides */
+.text-muted { color: var(--text-muted) !important; }
+
+/* Input, button, select font */
 input, textarea, button, select {
-    font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
 }

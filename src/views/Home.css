@@ -1,0 +1,367 @@
+/* ── THE NO-SCROLL GRID ── */
+.home-stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.home-dashboard-grid {
+  display: grid;
+  grid-template-columns: 300px 1fr 300px; /* Timer | Tasks | Notes */
+  /* Calculate remaining height for the two rows */
+  grid-template-rows: minmax(320px, 50vh) minmax(100px, 1fr); 
+  gap: 1.5rem;
+  height: calc(100% - 130px); /* Subtract header and stat row roughly */
+  position: relative;
+  z-index: 1;
+}
+
+/* ── AESTHETIC PLANT OVERLAYS ── */
+.plant-overlay-top {
+  position: fixed; /* Changed from absolute to fixed */
+  top: 0;
+  right: 0;
+  width: 300px;
+  height: 300px;
+  background-image: url('https://images.unsplash.com/photo-1596547609652-9fc5d8d428c9?q=80&w=600'); 
+  background-size: contain;
+  background-repeat: no-repeat;
+  pointer-events: none; 
+  z-index: 9999; /* Higher z-index */
+  opacity: 1 !important; /* Force visibility */
+  transform: rotate(15deg);
+}
+
+.plant-overlay-bottom {
+  position: fixed; /* Changed from absolute to fixed */
+  bottom: 0;
+  left: 0;
+  width: 250px;
+  height: 350px;
+  background-image: url('https://images.unsplash.com/photo-1596547609652-9fc5d8d428c9?q=80&w=600'); 
+  background-size: contain;
+  background-repeat: no-repeat;
+  pointer-events: none; 
+  z-index: 9999;
+  opacity: 0.8 !important;
+  transform: scaleY(-1) rotate(-20deg);
+}
+
+/* ── BASE CARDS ── */
+.paper-card {
+  background: var(--bg-surface);
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.card-title {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-main);
+  margin-bottom: 1rem;
+}
+
+/* ── 0. STAT CARDS ── */
+.stat-card {
+  padding: 1.25rem 1.5rem;
+  justify-content: center;
+}
+.stat-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+  margin-bottom: 0.5rem;
+}
+.stat-value-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.stat-number {
+  font-size: 1.8rem;
+  font-weight: 500;
+  color: var(--text-main);
+}
+.stat-icon-wrap {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--bg-hover);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  font-size: 1.1rem;
+}
+.bg-sage-light { background: #edf2eb; }
+.text-sage { color: var(--accent-sage); }
+.bg-yellow-light { background: #fff8e1; }
+.text-yellow { color: #f5b041; }
+.bg-red-light { background: #fdf2f0; }
+.text-red { color: #e74c3c; }
+
+.stat-chart-line {
+  height: 3px;
+  width: 100%;
+  border-radius: 2px;
+  background-color: var(--bg-hover); /* Placeholder for actual chart lines */
+}
+.line-gray { background: linear-gradient(90deg, #d9d0c5 30%, #f1eae0 100%); }
+.line-sage { background: linear-gradient(90deg, #70846b 60%, #edf2eb 100%); }
+.line-yellow { background: linear-gradient(90deg, #f5b041 40%, #fff8e1 100%); }
+.line-red { background: linear-gradient(90deg, #e74c3c 20%, #fdf2f0 100%); }
+
+/* ── 1. TIMER ── */
+.timer-card { align-items: center; justify-content: center; padding-top: 2rem;}
+.timer-ring-wrap { 
+  width: 160px; 
+  height: 160px; 
+  position: relative; 
+  margin-bottom: 1.5rem; 
+}
+.timer-svg { width: 100%; height: 100%; }
+
+.timer-track {
+  fill: none;
+  stroke: var(--border);
+  stroke-width: 4;
+}
+
+.timer-progress {
+  fill: none;
+  stroke: var(--accent-beige); /* The mockup has a beige track */
+  stroke-width: 4; 
+  stroke-linecap: round;
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+  transition: stroke-dashoffset 1s linear;
+}
+
+.timer-center {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+
+.timer-digits {
+  font-family: var(--font-sans);
+  font-size: 2.2rem;
+  font-weight: 500;
+  color: var(--text-main);
+}
+
+.timer-btns { display: flex; gap: 0.8rem; width: 100%; justify-content: center;}
+.btn-sage { background: var(--accent-sage); color: white; border: none; border-radius: 8px; padding: 0.5rem 1.2rem; font-size: 0.9rem; font-weight: 500; cursor: pointer; flex: 1; max-width: 120px;}
+.btn-outline { background: transparent; color: var(--text-main); border: 1px solid var(--border-strong); border-radius: 8px; padding: 0.5rem 1.2rem; font-size: 0.9rem; cursor: pointer; flex: 1; max-width: 120px;}
+
+/* ── 2. NOTEBOOK TASKS ── */
+.notebook-card {
+  background: var(--bg-surface);
+  border-radius: 8px 12px 12px 8px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+  position: relative;
+  padding: 1.5rem 1.5rem 1.5rem 4rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Notebook holes */
+.notebook-card::before {
+  content: ''; position: absolute;
+  top: 1.5rem; bottom: 1.5rem; left: 1.2rem; width: 14px;
+  background-image: radial-gradient(circle, var(--bg-base) 6px, transparent 7px);
+  background-size: 100% 45px;
+  background-position: 0 0;
+  background-repeat: repeat-y;
+}
+
+.notebook-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.tasks-progress-badge {
+  background: var(--bg-hover);
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.washi-tape {
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-1deg);
+  width: 80px;
+  height: 20px;
+  background-color: rgba(143, 169, 152, 0.7); /* Sage tint */
+  background-image: radial-gradient(#fff 10%, transparent 11%);
+  background-size: 5px 5px;
+  opacity: 0.8;
+  z-index: 10;
+}
+
+.notebook-lines {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.notebook-line {
+  display: flex; align-items: center; gap: 1rem;
+  padding: 0.8rem 0;
+  border-bottom: 1px dashed var(--border);
+}
+
+.faux-checkbox {
+  width: 18px;
+  height: 18px;
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: transparent;
+  transition: all 0.2s;
+}
+
+.faux-checkbox.checked {
+  background: var(--accent-sage);
+  border-color: var(--accent-sage);
+  color: white;
+}
+
+.task-title {
+  font-size: 0.95rem;
+  color: var(--text-main);
+}
+.task-title.done {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+.task-tag {
+  font-size: 0.65rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-weight: 500;
+}
+.tag-high { background: #fdf2f0; color: #e74c3c; }
+.tag-medium { background: #fff8e1; color: #f5b041; }
+
+
+/* ── 3. CORKBOARD & STICKY NOTE ── */
+.corkboard-card {
+  background-color: #d8c2aa; /* Cork color */
+  background-image: 
+    radial-gradient(rgba(0,0,0,0.05) 1px, transparent 1px),
+    radial-gradient(rgba(255,255,255,0.1) 1px, transparent 1px);
+  background-size: 8px 8px, 12px 12px;
+  background-position: 0 0, 4px 4px;
+  border-radius: 12px;
+  height: 100%;
+  padding: 1.5rem;
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+}
+
+.corkboard-title {
+  position: absolute;
+  top: 1rem; left: 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: rgba(0,0,0,0.6);
+}
+
+.real-sticky-note {
+  background: var(--accent-yellow);
+  width: 90%; 
+  min-height: 200px;
+  padding: 2rem 1.5rem 1.5rem 1.5rem;
+  position: relative;
+  box-shadow: 2px 4px 12px rgba(0,0,0,0.15);
+  transform: rotate(2deg);
+  border-radius: 2px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sticky-title {
+  font-family: var(--font-cursive);
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+  color: var(--text-main);
+}
+
+.sticky-body {
+  font-family: var(--font-cursive);
+  font-size: 1.1rem;
+  color: var(--text-main);
+  line-height: 1.5;
+}
+
+.sticky-list {
+  list-style: none;
+  padding-left: 0.5rem;
+}
+.sticky-list li::before {
+  content: '- ';
+}
+
+.star-doodle {
+  position: absolute;
+  bottom: 15px; right: 15px;
+  font-size: 1.2rem;
+  color: var(--text-muted);
+  transform: rotate(15deg);
+}
+
+
+/* ── 4. BOTTOM ROW (MUSIC & FOCUS) ── */
+/* ── 4. BOTTOM ROW (MUSIC & FOCUS) ── */
+.music-card {
+  padding: 0 !important; 
+  background: #FAF9F6;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* This is the specific part that fixes the sideways/giant iframe */
+.music-card iframe {
+  width: 350px !important;    /* Force a standard width so it doesn't wrap/stack */
+  height: 160px !important;   /* Force a standard player height */
+  border: none;
+  transform: scale(0.8);      /* Scale the whole thing down to fit the column */
+  transform-origin: center;
+  flex-shrink: 0;
+}
+
+.focus-card {
+  grid-column: 2 / span 2;
+  flex-direction: row !important;
+  justify-content: space-between;
+  align-items: center;
+}
+.focus-time-large {
+  font-family: var(--font-sans);
+  font-size: 1.8rem;
+  font-weight: 500;
+  color: var(--text-main);
+}

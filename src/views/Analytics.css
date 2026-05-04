@@ -1,0 +1,121 @@
+/* ── ANALYTICS GRID LAYOUT ── */
+.analytics-dashboard {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 1.5rem;
+  overflow-y: auto;
+  padding-bottom: 2rem;
+}
+
+.analytics-stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+.analytics-charts-row {
+  display: grid;
+  grid-template-columns: 1fr 2fr; /* Doughnut chart takes less space than bar chart */
+  gap: 1.5rem;
+}
+
+.analytics-bottom-row {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr 1fr 1fr;
+  gap: 1.5rem;
+}
+
+/* ── CHART CARDS ── */
+.chart-card {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.chart-title {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-main);
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px dashed var(--border);
+}
+
+.chart-container {
+  flex-grow: 1;
+  position: relative;
+  min-height: 200px;
+}
+
+/* ── CUSTOM BOTTOM CARDS ── */
+.completion-rate-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.completion-circle {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 6px solid var(--border);
+  border-left-color: var(--accent-sage);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.completion-value {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+.completion-label {
+  font-size: 0.6rem;
+  color: var(--text-muted);
+}
+
+.focus-time-card h3 {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+.focus-time-value {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* ── TREND INDICATORS ── */
+.trend-up {
+  color: var(--accent-sage);
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+.trend-down {
+  color: #e74c3c;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+.trend-neutral {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+/* Analytics Sticky Note */
+.analytics-sticky {
+  background: var(--accent-yellow);
+  padding: 1.5rem;
+  border-radius: 2px;
+  box-shadow: 2px 4px 12px rgba(0,0,0,0.1);
+  transform: rotate(3deg);
+  font-family: var(--font-cursive);
+  font-size: 1.1rem;
+  color: var(--text-main);
+  position: relative;
+  height: 100%;
+}

@@ -1,0 +1,197 @@
+/* ── TASKS GRID LAYOUT ── */
+.tasks-dashboard {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  padding-bottom: 2rem;
+  padding-right: 0.5rem;
+}
+
+.tasks-main-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.tasks-side-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* ── ADD TASK CARD ── */
+.add-task-card.paper-card {
+  position: relative;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  overflow: visible !important;
+  z-index: 0;
+}
+
+/* Notebook holes for add task card */
+.add-task-card::before {
+  content: '';
+  position: absolute;
+  top: 1rem;
+  bottom: 1rem;
+  left: 1rem;
+  width: 14px;
+  background-image: radial-gradient(circle, var(--bg-base) 6px, transparent 7px);
+  background-size: 100% 30px;
+  background-position: 0 0;
+  background-repeat: repeat-y;
+}
+
+.add-task-input-wrapper {
+  margin-left: 2rem;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px dashed var(--border-strong);
+  padding-bottom: 0.5rem;
+}
+
+.add-task-input {
+  flex-grow: 1;
+  background: transparent;
+  border: none;
+  font-size: 1rem;
+  color: var(--text-main);
+  outline: none;
+}
+
+.add-task-input::placeholder {
+  color: var(--text-faint);
+}
+
+.add-task-actions {
+  margin-left: 2rem;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+/* ── WASHI TAPE ── */
+.add-task-card .washi-tape {
+  position: absolute;
+  top: -12px;
+  left: 72%;
+  transform: rotate(2deg);
+  width: 60px;
+  height: 22px;
+  background-color: rgba(143, 169, 152, 0.75);
+  background-image: radial-gradient(#fff 10%, transparent 11%);
+  background-size: 5px 5px;
+  opacity: 0.9;
+  z-index: 20;
+}
+
+/* ── FILTER ROW ── */
+.tasks-filter-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+
+.filter-btn {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.filter-btn:hover {
+  background: var(--bg-hover);
+}
+
+.filter-btn.active {
+  background: var(--accent-sage);
+  color: white;
+  border-color: var(--accent-sage);
+}
+
+/* ── NOTEBOOK WRAPPER ── */
+.notebook-wrapper {
+  position: relative;
+  overflow: visible;
+}
+
+/* ── MAIN TASKS NOTEBOOK ── */
+.tasks-notebook {
+  background: var(--bg-surface);
+  border-radius: 8px 12px 12px 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  position: relative;
+  padding: 2rem 2rem 2rem 5rem;
+  border: 1px solid var(--border);
+  max-height: calc(100vh - 420px);
+  overflow-y: auto;
+  overflow-x: visible;
+}
+
+/* ── SPIRAL BINDING IMAGE ── */
+.tasks-notebook::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 52px;
+  background-image: url('../assets/bind.png');
+  background-repeat: repeat-y;
+  background-size: 52px auto;
+  background-position: center top;
+  z-index: 2;
+  pointer-events: none;
+  border-radius: 8px 0 0 8px;
+}
+
+/* Subtle shadow line next to binding */
+.tasks-notebook::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 52px;
+  width: 6px;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.04), transparent);
+  pointer-events: none;
+}
+
+/* ── NOTEBOOK LIST ── */
+.notebook-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.task-item-row {
+  display: flex;
+  align-items: center;
+  padding: 1rem 0;
+  border-bottom: 1px dashed var(--border-strong);
+  gap: 1rem;
+}
+
+.task-item-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.task-item-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: var(--text-muted);
+}

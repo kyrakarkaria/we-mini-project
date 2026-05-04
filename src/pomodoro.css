@@ -1,424 +1,139 @@
-@import url('https://fonts.googleapis.com/css2?family=Handlee&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Mono:wght@400;500&family=Inter:wght@300;400;500;600;700&display=swap');
 
-*, *::before, *::after {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+/* ── STUDYGRAM TOKENS (Light Mode) ───────────────────── */
+:root {
+  --bg-base:      #FAF7F2; /* Warmer, softer beige from the image */
+  --bg-surface:   #ffffff; /* Crisp white for cards */
+  --bg-hover:     #f1eae0; 
+  
+  --border:       #eae3d9;
+  --border-strong:#d9d0c5;
+
+  --text-main:    #2d2a26; /* Deep warm charcoal */
+  --text-muted:   #7d756d;
+  --text-faint:   #afa8a0;
+
+  --accent-sage:  #70846b;
+  --accent-peach: #f5e4e1;
+  --accent-yellow:#fff4d4; /* A brighter yellow for sticky notes */
+  --accent-red:   #e8a598; /* For urgent/high priority tags */
+  --accent-beige: #e9e0d1; /* For active tabs */
+
+  --font-cursive: 'Dancing Script', cursive;
+  --font-serif:   'Playfair Display', serif;
+  --font-sans:    'Inter', system-ui, sans-serif;
+  --font-mono:    'DM Mono', monospace;
 }
 
-body {
-    background-color: #fff3e4;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: Arial, Helvetica, sans-serif;
-    color: #333;
+/* ── RESET & NO-SCROLL LOCK ──────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body, #root {
+  margin: 0; 
+  padding: 0;
+  height: 100vh; /* Locks the screen height */
+  overflow: hidden; /* Kills the scroll completely */
+  background-color: var(--bg-base) !important;
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
 }
 
-#root {
-    width: 100%;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #fff3e4;
+/* ── APP SHELL (Side-by-Side Layout) ─────────────────── */
+.app-shell {
+  display: flex;
+  flex-direction: row; /* Puts sidebar and content side-by-side */
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
 }
 
-#fullCard {
-    font-family: Arial, Helvetica, sans-serif;
-    background-color: #fff9f6;
-    color: #333;
-    width: 72%;
-    border-radius: 30px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    padding: 2rem 3.5rem;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: auto 1fr auto;
-    grid-template-areas:
-        "header header header"
-        "col1   middle col3"
-        "footer footer footer";
-    column-gap: 1.25rem;
-    row-gap: 1rem;
-    height: 92vh;
-    max-height: 840px;
+/* ── PAGE CONTENT ────────────────────────────────────── */
+.page-content {
+  flex: 1;
+  height: 100vh;
+  padding: 1.5rem 2.5rem 2rem 2.5rem; /* reduced top from 2rem */
+  position: relative;
+  overflow: hidden;
 }
 
-#header {
-    grid-area: header;
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
+.page-header {
+  margin-bottom: 1.75rem;
+  position: relative;
+  padding-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 56px; /* matches date-stamp height */
 }
 
-#headerText {
-    font-size: 2.3rem;
-    font-weight: normal;
-    color: #333;
+/* Soft sage line under greeting */
+.page-header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, var(--border-strong), transparent);
+  opacity: 0.6;
 }
 
-#datetime {
-    display: flex;
-    gap: 1.5rem;
-    align-items: baseline;
-    font-size: 1.05rem;
-    font-weight: 400;
-    color: #666;
+.page-greeting {
+  font-family: var(--font-serif);
+  font-size: 2.2rem;
+  font-weight: 500;
+  font-style: italic;
+  color: var(--text-main);
+  letter-spacing: -0.3px;
+  margin: 0;
 }
 
-#datetime p { margin: 0; }
-
-#col1 {
-    grid-area: col1;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    min-height: 0;
+.page-greeting span {
+  color: var(--accent-sage); /* Turns your name Sage Green */
 }
 
-#pomodoroTimer {
-    background-color: #fff2e4;
-    border-radius: 20px;
-    padding: 1.25rem 1rem 0.75rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    flex: 1;
-    min-height: 0;
+/* ── GLOBAL INPUTS (Aesthetic Overrides) ─────────────── */
+.input-dark, .form-control, .form-select {
+  background: var(--bg-surface) !important;
+  border: 1px solid var(--border-strong) !important;
+  color: var(--text-main) !important;
+  border-radius: 7px !important;
+  font-family: var(--font-sans) !important;
+  font-size: 0.88rem;
+  padding: 0.55rem 0.9rem;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  width: 100%;
 }
 
-#timerContainer {
-    position: relative;
-    flex: 1;
-    min-height: 0;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.input-dark:focus, .form-control:focus, .form-select:focus {
+  border-color: var(--accent-sage) !important;
+  box-shadow: 0 0 0 2px rgba(112, 132, 107, 0.15) !important;
 }
 
-#pomodoroTimer svg {
-    width: 100%;
-    height: 100%;
-    max-width: 250px;
-    max-height: 250px;
+.input-dark::placeholder, .form-control::placeholder { 
+  color: var(--text-faint) !important; 
 }
 
-#track {
-    fill: #e4d7f5;
-    stroke: none;
+/* ── UTILITIES ───────────────────────────────────────── */
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--text-muted);
+  display: block;
 }
 
-#progress {
-    fill: none;
-    stroke: #a397ec;
-    stroke-width: 5;
-    transform: rotate(-90deg);
-    transform-origin: 50% 50%;
-    transition: stroke-dashoffset 1s linear;
+.text-muted {
+  color: var(--text-muted) !important;
 }
 
-#timer {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 2.8rem;
-    color: #333;
-    white-space: nowrap;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: normal;
-    pointer-events: none;
-}
-
-#timerButtons {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    padding: 0.75rem 0 0.25rem;
-    flex-shrink: 0;
-}
-
-#timerButtons img {
-    width: 22px;
-    height: 22px;
-    cursor: pointer;
-    object-fit: contain;
-    transition: transform 0.2s;
-}
-
-#timerButtons img:hover { transform: scale(1.15); }
-
-#timer_text {
-    font-size: 1rem;
-    color: #555;
-    text-align: center;
-    padding-bottom: 0.25rem;
-    flex-shrink: 0;
-}
-
-#spotify {
-    background-color: #fff2e4;
-    border-radius: 20px;
-    height: 100px;
-    flex-shrink: 0;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.4rem;
-}
-
-#spotify iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
-    display: block;
-}
-
-#middle {
-    grid-area: middle;
-    background-color: #fff2e4;
-    border-radius: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-evenly;
-    min-height: 0;
-    overflow: hidden;
-    padding: 0.75rem;
-}
-
-#window {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex: 1;
-    min-height: 0;
-}
-
-#window img {
-    max-height: 100%;
-    max-width: 100%;
-    object-fit: contain;
-}
-
-#dog {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex: 1;
-    min-height: 0;
-}
-
-#dog img {
-    max-height: 100%;
-    max-width: 100%;
-    object-fit: contain;
-}
-
-#col3 {
-    grid-area: col3;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    min-height: 0;
-}
-
-#toDoList {
-    background-color: #fff2e4;
-    border-radius: 20px;
-    padding: 1.1rem 1.1rem 0.75rem;
-    flex: 0 0 auto;
-    height: 55%;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-}
-
-#todoTitle {
-    font-size: 1.2rem;
-    color: #333;
-    font-weight: normal;
-    margin-bottom: 0.7rem;
-    flex-shrink: 0;
-}
-
-#todoInputRow {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    flex-shrink: 0;
-    margin-bottom: 0.5rem;
-}
-
-#todoInput {
-    flex: 1;
-    padding: 8px 15px;
-    border: 1.5px solid #ccc;
-    border-radius: 20px;
-    font-size: 0.95rem;
-    background: #fff;
-    color: #333;
-    outline: none;
-    font-family: Arial, Helvetica, sans-serif;
-    transition: border-color 0.2s;
-}
-
-#todoInput:focus { border: 2px solid #a397ec; }
-#todoInput::placeholder { color: #aaa; }
-
-#addButton {
-    width: 24px;
-    height: 24px;
-    cursor: pointer;
-    flex-shrink: 0;
-    object-fit: contain;
-    transition: transform 0.2s;
-    display: block;
-}
-
-#addButton:hover { transform: scale(1.15); }
-
-#list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    overflow-y: auto;
-    flex: 1;
-    min-height: 0;
-    padding-right: 4px;
-}
-
-#list::-webkit-scrollbar { width: 5px; }
-#list::-webkit-scrollbar-thumb { background: #c3b8e8; border-radius: 4px; }
-#list::-webkit-scrollbar-track { background: transparent; margin: 4px 0; }
-
-#list li {
-    background: #e4d7f5;
-    padding: 10px 12px;
-    margin-bottom: 8px;
-    border-radius: 20px;
-    display: flex;
-    align-items: center;
-    font-size: 0.95rem;
-    color: #333;
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-#list li input[type="checkbox"] {
-    -webkit-appearance: none;
-    appearance: none;
-    min-width: 20px;
-    min-height: 20px;
-    background-color: white;
-    border: 2px solid #a397ec;
-    border-radius: 50%;
-    cursor: pointer;
-    margin-right: 10px;
-    flex-shrink: 0;
-}
-
-#list li input[type="checkbox"]:checked {
-    background-color: white;
-    border-color: #a397ec;
-    background-image: url('./assets/check.png');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-}
-
-.done { text-decoration: line-through; color: #999; }
-
-.delete-btn {
-    margin-left: auto;
-    width: 15px;
-    height: 15px;
-    cursor: pointer;
-    object-fit: contain;
-    opacity: 0.6;
-    flex-shrink: 0;
-    transition: opacity 0.2s;
-    display: block;
-}
-
-.delete-btn:hover { opacity: 1; }
-
-#notes {
-    background-color: #fff2e4;
-    border-radius: 20px;
-    padding: 1.1rem;
-    flex: 1;
-    min-height: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-#notesText {
-    background-color: #e4d7f5;
-    border: 1px solid #c4b8ea;
-    border-radius: 5px;
-    padding: 15px;
-    box-shadow: 3px 3px 6px rgba(0,0,0,0.18);
-    transform: rotate(2deg);
-    font-family: 'Handlee', cursive;
-    font-size: 1.05rem;
-    color: #444;
-    width: 90%;
-    height: 90%;
-    resize: none;
-    outline: none;
-    display: block;
-    overflow-y: auto;
-    line-height: 1.5;
-}
-
-#notesText::placeholder {
-    color: #888;
-    font-family: 'Handlee', cursive;
-    font-size: 1.05rem;
-}
-
-#footer {
-    grid-area: footer;
-    display: flex;
-    flex-direction: column;
-    padding-bottom: 0.5rem;
-}
-
-#footer > p {
-    font-size: 1.15rem;
-    color: #333;
-    font-weight: normal;
-    margin: 0.4rem 0 0.5rem;
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-#progressBar {
-    width: 100%;
-    height: 30px;
-    background-color: #e4d7f5;
-    border-radius: 15px;
-    overflow: hidden;
-}
-
-#actualBar {
-    height: 100%;
-    background-color: #a397ec;
-    border-radius: 15px;
-    min-width: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: width 0.5s ease-in-out;
-}
-
-#actualBar span {
-    font-weight: bold;
-    font-size: 0.95rem;
-    color: #222;
-    font-family: Arial, Helvetica, sans-serif;
-}
+/* ── SCROLLBAR (Just in case inner elements scroll) ──── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-faint); }
