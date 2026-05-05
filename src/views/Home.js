@@ -129,7 +129,7 @@ export default function Home({
         </div>
 
         {/* ROW 2, COL 1: MUSIC */}
-        <div className="music-card">
+        <div className="music-card paper-card">
           <div className="music-container">
             <iframe
               src="https://widgets.commoninja.com/iframe/3586f4ce-cf4a-4332-aafd-dc3cb9614903"

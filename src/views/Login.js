@@ -34,14 +34,35 @@ export default function Login() {
 
   return (
     <div className="login-page">
+
+      {/* ── LEFT: DECORATIVE PANEL ── */}
       <div className="login-left">
-        <p className="login-quote">"The secret of getting ahead is getting started."</p>
+        <div className="login-left-inner">
+          <span className="login-brand-left">Taskflow</span>
+
+          <div className="login-divider">
+        
+          </div>
+
+          <p className="login-quote">
+            "The secret of getting ahead is getting started."
+          </p>
+          <p className="login-quote-author">— Mark Twain</p>
+        </div>
       </div>
+
+      {/* ── RIGHT: FORM ── */}
       <div className="login-right">
         <div className="login-box">
-          <h1 className="login-brand">Taskflow</h1>
-          <h2 className="login-title">{isSignup ? 'Create account' : 'Welcome back'}</h2>
-          <p className="login-sub">{isSignup ? 'Start your workspace' : 'Sign in to continue'}</p>
+
+          <span className="login-brand">Taskflow</span>
+
+          <h2 className="login-title">
+            {isSignup ? 'Create account' : 'Welcome back'}
+          </h2>
+          <p className="login-sub">
+            {isSignup ? 'Start your productive workspace.' : 'Sign in to continue your work.'}
+          </p>
 
           {error && <div className="login-error">{error}</div>}
 
@@ -49,20 +70,42 @@ export default function Login() {
             {isSignup && (
               <div className="lf-field">
                 <label>Name</label>
-                <input name="name" type="text" placeholder="Your name"
-                  value={form.name} onChange={handle} required />
+                <input
+                  name="name"
+                  type="text"
+                  placeholder="Your name"
+                  value={form.name}
+                  onChange={handle}
+                  required
+                />
               </div>
             )}
+
             <div className="lf-field">
               <label>Email</label>
-              <input name="email" type="email" placeholder="you@example.com"
-                value={form.email} onChange={handle} required />
+              <input
+                name="email"
+                type="email"
+                placeholder="you@example.com"
+                value={form.email}
+                onChange={handle}
+                required
+              />
             </div>
+
             <div className="lf-field">
               <label>Password</label>
-              <input name="password" type="password" placeholder="••••••••"
-                value={form.password} onChange={handle} required minLength={6} />
+              <input
+                name="password"
+                type="password"
+                placeholder="••••••••"
+                value={form.password}
+                onChange={handle}
+                required
+                minLength={6}
+              />
             </div>
+
             <button className="login-btn" type="submit" disabled={loading}>
               {loading ? 'Please wait...' : (isSignup ? 'Create Account' : 'Sign In')}
             </button>
@@ -74,8 +117,14 @@ export default function Login() {
               {isSignup ? 'Sign in' : 'Sign up'}
             </span>
           </p>
+
+          <p className="login-note">
+            Made by Kyra Karkaria & Kunsh Kaul
+          </p>
+
         </div>
       </div>
+
     </div>
   );
 }

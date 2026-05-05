@@ -8,21 +8,9 @@
   padding-bottom: 2rem;
 }
 
-.analytics-stats-row {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1.5rem;
-}
-
 .analytics-charts-row {
   display: grid;
-  grid-template-columns: 1fr 2fr; /* Doughnut chart takes less space than bar chart */
-  gap: 1.5rem;
-}
-
-.analytics-bottom-row {
-  display: grid;
-  grid-template-columns: 1fr 1.5fr 1fr 1fr;
+  grid-template-columns: 1fr 2fr;
   gap: 1.5rem;
 }
 
@@ -49,73 +37,130 @@
   min-height: 200px;
 }
 
-/* ── CUSTOM BOTTOM CARDS ── */
-.completion-rate-card {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+/* ── STAT CARDS ── */
+.stat-card {
+  padding: 1.25rem 1.5rem;
+  justify-content: center;
 }
-.completion-circle {
-  width: 80px;
-  height: 80px;
+
+.stat-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+  margin-bottom: 0.5rem;
+}
+
+.stat-value-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.stat-number {
+  font-size: 1.8rem;
+  font-weight: 500;
+  color: var(--text-main);
+}
+
+.stat-icon-wrap {
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
-  border: 6px solid var(--border);
-  border-left-color: var(--accent-sage);
+  background: var(--bg-hover);
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
-}
-.completion-value {
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: var(--text-main);
-}
-.completion-label {
-  font-size: 0.6rem;
   color: var(--text-muted);
+  font-size: 1rem;
 }
 
-.focus-time-card h3 {
-  font-size: 0.9rem;
-  color: var(--text-muted);
+/* Softer muted tones — no harsh red/yellow */
+.bg-sage-light  { background: #edf2eb; }
+.text-sage      { color: var(--accent-sage); }
+.bg-yellow-light { background: #faf4e4; }
+.text-yellow    { color: #c9963a; }   /* muted amber instead of bright yellow */
+.bg-red-light   { background: #f7eeec; }
+.text-red       { color: #b85c52; }   /* muted terracotta instead of bright red */
+
+.stat-chart-line {
+  height: 2px;            /* thinner */
+  width: 100%;
+  border-radius: 2px;
 }
-.focus-time-value {
-  font-size: 1.8rem;
-  font-weight: 600;
-  color: var(--text-main);
+
+.line-gray   { background: linear-gradient(90deg, #d9d0c5 30%, transparent 100%); }
+.line-sage   { background: linear-gradient(90deg, #70846b 60%, transparent 100%); }
+.line-yellow { background: linear-gradient(90deg, #c9963a 40%, transparent 100%); }
+.line-red    { background: linear-gradient(90deg, #b85c52 20%, transparent 100%); }
+
+/* ── PRIORITY LEGEND ── */
+.priority-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  font-size: 0.8rem;
+  margin-left: 1.5rem;
+  min-width: 130px;
+}
+
+.priority-legend-item {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.6rem;
+}
+
+.priority-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.priority-legend-label {
+  color: var(--text-muted);
+  flex: 1;
+}
+
+.priority-legend-value {
+  color: var(--text-main);
+  font-weight: 500;
+  text-align: right;
 }
 
 /* ── TREND INDICATORS ── */
 .trend-up {
   color: var(--accent-sage);
-  font-size: 0.8rem;
-  font-weight: 500;
-}
-.trend-down {
-  color: #e74c3c;
-  font-size: 0.8rem;
-  font-weight: 500;
-}
-.trend-neutral {
-  color: var(--text-muted);
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 500;
 }
 
-/* Analytics Sticky Note */
-.analytics-sticky {
-  background: var(--accent-yellow);
-  padding: 1.5rem;
-  border-radius: 2px;
-  box-shadow: 2px 4px 12px rgba(0,0,0,0.1);
-  transform: rotate(3deg);
-  font-family: var(--font-cursive);
-  font-size: 1.1rem;
-  color: var(--text-main);
-  position: relative;
+.trend-down {
+  color: #b85c52;
+  font-size: 0.78rem;
+  font-weight: 500;
+}
+
+.trend-neutral {
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  font-weight: 500;
+}
+
+/* ── EMPTY STATE ── */
+.analytics-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   height: 100%;
+  color: var(--text-faint);
+  gap: 0.5rem;
+  font-size: 0.85rem;
+}
+
+.analytics-empty i {
+  font-size: 2rem;
+  opacity: 0.4;
 }

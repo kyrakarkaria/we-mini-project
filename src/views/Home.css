@@ -18,36 +18,6 @@
   z-index: 1;
 }
 
-/* ── AESTHETIC PLANT OVERLAYS ── */
-.plant-overlay-top {
-  position: fixed; /* Changed from absolute to fixed */
-  top: 0;
-  right: 0;
-  width: 300px;
-  height: 300px;
-  background-image: url('https://images.unsplash.com/photo-1596547609652-9fc5d8d428c9?q=80&w=600'); 
-  background-size: contain;
-  background-repeat: no-repeat;
-  pointer-events: none; 
-  z-index: 9999; /* Higher z-index */
-  opacity: 1 !important; /* Force visibility */
-  transform: rotate(15deg);
-}
-
-.plant-overlay-bottom {
-  position: fixed; /* Changed from absolute to fixed */
-  bottom: 0;
-  left: 0;
-  width: 250px;
-  height: 350px;
-  background-image: url('https://images.unsplash.com/photo-1596547609652-9fc5d8d428c9?q=80&w=600'); 
-  background-size: contain;
-  background-repeat: no-repeat;
-  pointer-events: none; 
-  z-index: 9999;
-  opacity: 0.8 !important;
-  transform: scaleY(-1) rotate(-20deg);
-}
 
 /* ── BASE CARDS ── */
 .paper-card {

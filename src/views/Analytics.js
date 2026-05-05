@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, LineElement, PointElement } from 'chart.js';
-import { Doughnut, Bar, Line } from 'react-chartjs-2';
+import {
+  Chart as ChartJS, ArcElement, Tooltip, Legend,
+  CategoryScale, LinearScale, BarElement, LineElement, PointElement
+} from 'chart.js';
+import { Doughnut, Bar } from 'react-chartjs-2';
 import './Analytics.css';
-import './Home.css'; // Reuse stat card styles
 
-ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, LineElement, PointElement);
+ChartJS.register(
+  ArcElement, Tooltip, Legend,
+  CategoryScale, LinearScale, BarElement, LineElement, PointElement
+);
 
 export default function Analytics({ tasks = [], authFetch }) {
   const [sessions, setSessions] = useState([]);
@@ -17,7 +22,7 @@ export default function Analytics({ tasks = [], authFetch }) {
       .catch(() => {});
   }, [authFetch]);
 
-  // ── DATA CRUNCHING ─────────────────────────────────
+  // ── DATA ──────────────────────────────────────────
   const totalTasks     = tasks.length;
   const completedTasks = tasks.filter(t => t.isDone).length;
   const activeTasks    = totalTasks - completedTasks;
@@ -25,9 +30,7 @@ export default function Analytics({ tasks = [], authFetch }) {
   const medPriority    = tasks.filter(t => t.priority === 'medium').length;
   const lowPriority    = tasks.filter(t => t.priority === 'low').length;
 
-  const completionRate = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
-
-  // ── LAST 7 DAYS SESSIONS ───────────────────────────
+  // ── LAST 7 DAYS ───────────────────────────────────
   const last7 = [...Array(7)].map((_, i) => {
     const d = new Date();
     d.setDate(d.getDate() - (6 - i));
@@ -44,14 +47,17 @@ export default function Analytics({ tasks = [], authFetch }) {
     new Date(d).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
   );
 
-  // ── CHARTS ─────────────────────────────────────────
+  const hasSessions = sessionsByDay.some(x => x > 0);
+  const hasTasks    = totalTasks > 0;
+
+  // ── CHART DATA — only real data, no fallbacks ─────
   const priorityData = {
     labels: ['High', 'Medium', 'Low'],
     datasets: [{
-      data: [highPriority || 2, medPriority || 2, lowPriority || 0], // Fallback mock data to match image
-      backgroundColor: ['#e74c3c', '#f5b041', '#70846b'],
+      data: [highPriority, medPriority, lowPriority],
+      backgroundColor: ['#b85c52', '#c9963a', '#70846b'],  /* muted tones */
       borderWidth: 0,
-      cutout: '75%',
+      cutout: '72%',
     }]
   };
 
@@ -59,21 +65,9 @@ export default function Analytics({ tasks = [], authFetch }) {
     labels: dayLabels,
     datasets: [{
       label: 'Minutes studied',
-      data: sessionsByDay.some(x => x > 0) ? sessionsByDay : [30, 15, 45, 30, 60, 15, 40], // Fallback mock data
-      backgroundColor: '#a3b19b', // Faded sage
+      data: sessionsByDay,
+      backgroundColor: '#a3b19b',
       borderRadius: 4,
-    }]
-  };
-
-  const trendData = {
-    labels: dayLabels,
-    datasets: [{
-      data: [2, 1, 4, 3, 2, 5, 2], // Mock trend
-      borderColor: '#70846b',
-      borderWidth: 2,
-      tension: 0.3,
-      pointBackgroundColor: '#70846b',
-      pointRadius: 3,
     }]
   };
 
@@ -86,99 +80,151 @@ export default function Analytics({ tasks = [], authFetch }) {
   const barOptions = {
     ...chartOptions,
     scales: {
-      y: { beginAtZero: true, grid: { display: false }, ticks: { callback: v => `${v}m`, color: '#afa8a0', font: {size: 10} }, border: {display: false} },
-      x: { grid: { display: false }, ticks: { color: '#afa8a0', font: {size: 10} }, border: {display: false} }
-    }
-  };
-
-  const lineOptions = {
-    ...chartOptions,
-    scales: {
-      y: { display: true, beginAtZero: true, grid: { display: false }, ticks: { maxTicksLimit: 4, color: '#afa8a0', font: {size: 10} }, border: {display: false} },
-      x: { display: true, grid: { display: false }, ticks: { maxTicksLimit: 3, color: '#afa8a0', font: {size: 10} }, border: {display: false} }
+      y: {
+        beginAtZero: true,
+        grid: { display: false },
+        ticks: { callback: v => `${v}m`, color: '#afa8a0', font: { size: 10 } },
+        border: { display: false }
+      },
+      x: {
+        grid: { display: false },
+        ticks: { color: '#afa8a0', font: { size: 10 } },
+        border: { display: false }
+      }
     }
   };
 
   return (
     <div className="analytics-dashboard">
+
+      {/* ── HEADER ── */}
       <div className="d-flex justify-content-between align-items-center mb-1">
         <div>
-          <h2 className="mb-0" style={{fontFamily: 'var(--font-serif)', color: 'var(--text-main)'}}>Your Productivity</h2>
-          <p className="text-muted" style={{fontSize: '0.85rem'}}>Track your progress and build better habits.</p>
+          <h2 className="mb-0" style={{ fontFamily: 'var(--font-serif)', color: 'var(--text-main)' }}>
+            Your Productivity
+          </h2>
+          <p className="text-muted" style={{ fontSize: '0.85rem' }}>
+            Track your progress and build better habits.
+          </p>
         </div>
-    
       </div>
 
-      {/* ── TOP STAT CARDS ── */}
+      {/* ── STAT CARDS ── */}
       <div className="home-stats-row">
         <div className="stat-card paper-card">
           <div className="stat-label">TOTAL TASKS</div>
           <div className="stat-value-row">
-            <span className="stat-number">{totalTasks || 4}</span>
-            <div className="stat-icon-wrap"><i className="bi bi-clipboard"></i></div>
+            <span className="stat-number">{totalTasks}</span>
+            <div className="stat-icon-wrap">
+              <i className="bi bi-clipboard"></i>
+            </div>
           </div>
-          <div className="trend-up mb-2"><i className="bi bi-arrow-up"></i> 2 from last week</div>
           <div className="stat-chart-line line-gray"></div>
         </div>
+
         <div className="stat-card paper-card">
           <div className="stat-label">COMPLETED</div>
           <div className="stat-value-row">
-            <span className="stat-number">{completedTasks || 1}</span>
-            <div className="stat-icon-wrap bg-sage-light"><i className="bi bi-check-circle text-sage"></i></div>
+            <span className="stat-number">{completedTasks}</span>
+            <div className="stat-icon-wrap bg-sage-light">
+              <i className="bi bi-check-circle text-sage"></i>
+            </div>
           </div>
-          <div className="trend-up mb-2"><i className="bi bi-arrow-up"></i> 1 from last week</div>
           <div className="stat-chart-line line-sage"></div>
         </div>
+
         <div className="stat-card paper-card">
           <div className="stat-label">IN PROGRESS</div>
           <div className="stat-value-row">
-            <span className="stat-number">{activeTasks || 3}</span>
-            <div className="stat-icon-wrap bg-yellow-light"><i className="bi bi-clock text-yellow"></i></div>
+            <span className="stat-number">{activeTasks}</span>
+            <div className="stat-icon-wrap bg-yellow-light">
+              <i className="bi bi-clock text-yellow"></i>
+            </div>
           </div>
-          <div className="trend-down mb-2"><i className="bi bi-arrow-down"></i> 1 from last week</div>
           <div className="stat-chart-line line-yellow"></div>
         </div>
+
         <div className="stat-card paper-card">
           <div className="stat-label">HIGH PRIORITY</div>
           <div className="stat-value-row">
-            <span className="stat-number">{highPriority || 2}</span>
-            <div className="stat-icon-wrap bg-red-light"><i className="bi bi-flag text-red"></i></div>
+            <span className="stat-number">{highPriority}</span>
+            <div className="stat-icon-wrap bg-red-light">
+              <i className="bi bi-flag text-red"></i>
+            </div>
           </div>
-          <div className="trend-neutral mb-2">— same as last week</div>
           <div className="stat-chart-line line-red"></div>
         </div>
       </div>
 
       {/* ── CHARTS ROW ── */}
       <div className="analytics-charts-row">
+
+        {/* Priority Breakdown */}
         <div className="chart-card paper-card">
           <h3 className="chart-title">Task Priority Breakdown</h3>
-          <div className="chart-container d-flex align-items-center">
-            <div style={{width: '60%', height: '180px', position: 'relative'}}>
-              <Doughnut data={priorityData} options={{...chartOptions, cutout: '70%'}} />
-              <div className="position-absolute w-100 h-100 d-flex flex-column align-items-center justify-content-center" style={{top: 0, left: 0}}>
-                <span className="fs-3 fw-bold">{totalTasks || 4}</span>
-                <span className="text-muted" style={{fontSize: '0.7rem'}}>Total Tasks</span>
+          {!hasTasks ? (
+            <div className="analytics-empty">
+              <i className="bi bi-pie-chart"></i>
+              <span>No tasks yet</span>
+            </div>
+          ) : (
+            <div className="chart-container d-flex align-items-center">
+              <div style={{ width: '55%', height: '180px', position: 'relative', flexShrink: 0 }}>
+                <Doughnut data={priorityData} options={chartOptions} />
+                <div
+                  className="position-absolute w-100 h-100 d-flex flex-column align-items-center justify-content-center"
+                  style={{ top: 0, left: 0, pointerEvents: 'none' }}
+                >
+                  <span style={{ fontSize: '1.6rem', fontWeight: 600 }}>{totalTasks}</span>
+                  <span className="text-muted" style={{ fontSize: '0.7rem' }}>Tasks</span>
+                </div>
+              </div>
+
+              {/* Fixed legend — dot + label + value on same row */}
+              <div className="priority-legend">
+                <div className="priority-legend-item">
+                  <span className="priority-dot" style={{ background: '#b85c52' }}></span>
+                  <span className="priority-legend-label">High</span>
+                  <span className="priority-legend-value">
+                    {highPriority} ({totalTasks > 0 ? Math.round(highPriority / totalTasks * 100) : 0}%)
+                  </span>
+                </div>
+                <div className="priority-legend-item">
+                  <span className="priority-dot" style={{ background: '#c9963a' }}></span>
+                  <span className="priority-legend-label">Medium</span>
+                  <span className="priority-legend-value">
+                    {medPriority} ({totalTasks > 0 ? Math.round(medPriority / totalTasks * 100) : 0}%)
+                  </span>
+                </div>
+                <div className="priority-legend-item">
+                  <span className="priority-dot" style={{ background: '#70846b' }}></span>
+                  <span className="priority-legend-label">Low</span>
+                  <span className="priority-legend-value">
+                    {lowPriority} ({totalTasks > 0 ? Math.round(lowPriority / totalTasks * 100) : 0}%)
+                  </span>
+                </div>
               </div>
             </div>
-            <div className="ms-4" style={{fontSize: '0.8rem'}}>
-              <div className="d-flex align-items-center mb-2"><span className="badge rounded-pill me-2" style={{background: '#e74c3c'}}>&nbsp;</span> High <span className="ms-auto text-muted">2 (50%)</span></div>
-              <div className="d-flex align-items-center mb-2"><span className="badge rounded-pill me-2" style={{background: '#f5b041'}}>&nbsp;</span> Medium <span className="ms-auto text-muted">2 (50%)</span></div>
-              <div className="d-flex align-items-center"><span className="badge rounded-pill me-2" style={{background: '#70846b'}}>&nbsp;</span> Low <span className="ms-auto text-muted">0 (0%)</span></div>
-            </div>
-          </div>
+          )}
         </div>
 
+        {/* Study Sessions */}
         <div className="chart-card paper-card position-relative">
-          <div className="washi-tape" style={{left: '5%', top: '-8px', transform: 'rotate(-2deg)'}}></div>
+          <div className="washi-tape" style={{ left: '5%', top: '-8px', transform: 'rotate(-2deg)' }}></div>
           <h3 className="chart-title">Study Sessions — Last 7 Days</h3>
-          <div className="chart-container pe-4 pt-2">
-            <Bar data={sessionData} options={barOptions} />
-          </div>
+          {!hasSessions ? (
+            <div className="analytics-empty">
+              <i className="bi bi-bar-chart"></i>
+              <span>No study sessions recorded yet</span>
+            </div>
+          ) : (
+            <div className="chart-container pe-4 pt-2">
+              <Bar data={sessionData} options={barOptions} />
+            </div>
+          )}
         </div>
-      </div>
 
-    
+      </div>
     </div>
   );
 }

@@ -1,34 +1,14 @@
-/* ── SETTINGS GRID LAYOUT ── */
 .settings-dashboard {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 280px 1fr;
   gap: 1.5rem;
-  height: 100%;
   overflow-y: auto;
   padding-bottom: 2rem;
-  padding-right: 0.5rem;
-}
-
-/* Specific grid placements to match masonry mockup */
-.settings-col-1 {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-.settings-col-2 {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-.settings-col-3 {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
 }
 
 /* ── SETTINGS CARDS ── */
 .settings-card {
-  padding: 1.5rem;
+  padding: 1.75rem;
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -36,62 +16,134 @@
 
 .settings-card-title {
   font-family: var(--font-sans);
-  font-size: 1rem;
+  font-size: 0.7rem;
   font-weight: 600;
-  color: var(--text-main);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
   padding-bottom: 0.8rem;
-  border-bottom: 1px dashed var(--border-strong);
-  margin-bottom: 0.5rem;
+  border-bottom: 1px dashed var(--border);
+  margin-bottom: 0.25rem;
 }
 
-/* Profile specific */
+/* ── PROFILE CARD ── */
+.settings-profile-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.75rem;
+  padding: 2rem 1.5rem;
+}
+
 .settings-profile-img {
   width: 80px;
   height: 80px;
   border-radius: 50%;
   object-fit: cover;
-  margin-bottom: 1rem;
-  border: 3px solid var(--accent-sage);
+  border: 3px solid var(--border);
 }
 
-/* Preference items */
-.preference-item {
+.settings-profile-name {
+  font-family: var(--font-serif);
+  font-size: 1.2rem;
+  color: var(--text-main);
+  margin: 0;
+}
+
+.settings-profile-role {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.settings-profile-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--bg-hover);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 0.3rem 0.9rem;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+}
+
+/* ── PREFERENCE ROWS ── */
+.preference-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.8rem;
-}
-.preference-label {
-  font-size: 0.9rem;
-  color: var(--text-main);
-  font-weight: 500;
-}
-.preference-control input, .preference-control select {
-  background: var(--bg-hover);
-  border: 1px solid var(--border);
-  padding: 0.3rem 0.5rem;
-  border-radius: 6px;
-  font-size: 0.85rem;
-  color: var(--text-main);
-  width: 80px;
-  text-align: center;
-  outline: none;
-}
-.preference-control select {
-  width: auto;
-  text-align: left;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border);
 }
 
-/* Theme circles */
-.theme-circle {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  cursor: pointer;
-  border: 2px solid transparent;
-  display: inline-block;
-  margin-right: 0.5rem;
+.preference-row:last-of-type {
+  border-bottom: none;
 }
-.theme-circle.active {
-  border-color: var(--text-main);
+
+.preference-label {
+  font-size: 0.88rem;
+  color: var(--text-main);
+}
+
+.preference-hint {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 0.15rem;
+}
+
+/* ── NUMBER INPUT ── */
+.timer-input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--bg-hover);
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  padding: 0.3rem 0.7rem;
+}
+
+.timer-input-wrap input {
+  width: 44px;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-main);
+  text-align: center;
+}
+
+.timer-input-wrap span {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+/* ── STEPPER BUTTONS ── */
+.stepper-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 0 0.2rem;
+  font-size: 0.9rem;
+  line-height: 1;
+  transition: color 0.15s;
+}
+
+.stepper-btn:hover {
+  color: var(--accent-sage);
+}
+
+/* ── APPLIED NOTE ── */
+.settings-applied-note {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-style: italic;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.25rem;
 }
